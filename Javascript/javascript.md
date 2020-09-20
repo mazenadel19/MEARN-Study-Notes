@@ -127,6 +127,9 @@ console.log(5=="5")// returns true as JS converts the numerical 5 to string, it'
 console.log(3<2<1) //returns true!!.. the parser her converted 3<2 to false and the equation became false < 1 then false is changed into zero so the final equation became 0<1 which returns FALSE ... to solve this problem we use brackets => 3<(2<1) this will returns false
 ```
 
+#### unary operators
+![alt](imgs/unary.png)
+[Operator_Precedence#Associativity](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Associativity)
 ### communicating with user:
 
 ```javascript
@@ -137,14 +140,126 @@ alert("value of x: "+x);
 var name= prompt("enter your name","Mr.J"); // in case the prompt showed up and I clicked cancel instead of ok the value of name will be null... the default value
 
 var action= confirm("are you sure?") // action value is either true or false
-
-
 ```
-
 ___
 
 ## JS functions
+<br>
 
+### Built-in functions
+
+```javascript
+var x = "abc1001"
+
+var x = 'abc1001';
+console.log( parseInt(x)); //Nan
+
+x = '1001abc1001';
+console.log(parseInt(x)); //1001
+
+x = '10.01abc1001';
+console.log(parseInt(x)); //10
+
+x = '10.01abc1001';
+console.log(parseFloat(x)); //10.01
+
+x = '01000';
+console.log(parseInt(x, "2")); //8
+
+// we add radix (the second parameter for the parseInt) to the to convert from binary to decimal base
+
+//you can convert from octal to decimal by changing the radix to 8
+
+//you can convert from Hexadecimal to decimal by changing the radix to 16
+
+
+function div(x) {
+  if (isFinite(1000 / x)) {
+    return 'Number is NOT Infinity.';
+  }
+  return 'Number is Infinity!';
+}
+
+console.log(div(0));
+// expected output: "Number is Infinity!""
+
+console.log(div(1));
+// expected output: "Number is NOT Infinity."
+```
+
+
+```javascript
+//tricky examples using isFinite() & isNan()
+
+
+console.log(typeof '4abc');
+console.log(typeof 4);
+
+console.log(isFinite('4abc')); //false
+
+console.log(isNaN('4abc')); //true
+
+console.log(isNaN('abc4')); //true
+
+console.log(isFinite('0.4')); //true
+
+console.log(isFinite('4')); //true
+
+console.log(isFinite(4)); //true
+
+
+console.log(isNaN("125")); //false
+
+console.log(isNaN(125)); //false
+
+//isFinite() returns true only if the input is a number without characters
+
+//isNan() returns true only if the input is included in quotation marks
+```
+
+##### NB:
+
+prompt output is always a string value so if you're getting a numerical value you need to covert it use parseInt() or parseFloat()
+
+[octal number system](https://www.tutorialspoint.com/octal-number-system)
+<br>
+
+[hexadecimal number system](https://www.tutorialspoint.com/hexadecimal-number-system)
+
+
+```javascript
+//encodeURIComponent() is a used to escape special characters in javascript, while decodeURIComponent() is a return the main strnig back before encoding
+
+// encodes characters such as ?,=,/,&,:
+console.log(`?x=${encodeURIComponent('test?')}`);
+// expected output: "?x=test%3F"
+
+console.log(`?x=${decodeURIComponent('?x=test%3F')}`);
+// expected output: "?x=?x=test?"
+```
+### functions:
+
+##### NB: if you didn't specify a return statement the function returns undefined
+
+```javascript
+var x = 5;
+function(){
+   var x=8; //overriding a preexisted global variable  is called  shadowing
+ //... the rest of your code here
+}
+```
+##### NB: You can define variables <u>without the var keyword</u> inside a function but that results in making your variable <u>Global</u> instead of being local to the function
+
+```javascript
+var x = 4;
+function dragon() {
+    y = 5;
+    console.log(x + y);
+}
+console.log(y); //undefined
+dragon(); //9
+console.log(y); //5
+```
 ___
 <br>
 
