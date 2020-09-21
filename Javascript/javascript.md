@@ -10,6 +10,7 @@
   - [JS functions](#js-functions)
   - [JS built-in objects](#js-built-in-objects)
   - [error Object](#error-object)
+  - [object Object](#object-object)
   - [function Object](#function-object)
   - [Browser Object Model (BOM)](#browser-object-model-bom)
   - [Document Object Model (DOM](#document-object-model-dom)
@@ -459,9 +460,244 @@ ___
 ## error Object
 <br>
 
+1. syntax error
+2. type error
+3. range error
+4. reference error
+5. eval error
+6. URI error
+
+
+### SyntaxError : error when trying to interpret syntactically invalid code.
+
 ```javascript
+alert("hello"; //syntaxError
+```
+<br>
+
+### TypeError : represents an error when an operation could not be performed, typically (but not exclusively) when a value is not of the expected type. It may be thrown when:
+
+<br>
+
+- an operand or argument passed to a function is incompatible with the type expected by that operator or function; or
+- when attempting to modify a value that cannot be changed; or
+- when attempting to use a value in an inappropriate way.53
+
+
+```javascript
+console.logg("hello"); //type error, console.logg is not a function 
+```
+
+<br>
+
+### RangeError : when a value is not in the set or range of allowed values.
+
+```javascript
+console.log(123.456.toFixed(2)); //123.46
+console.log(123.456.toFixed(101)); //RangeError: toFixed() digits argument must be between 0 and 100 
+
+
+/**
+ * toFixed() method formats a number using fixed-point notation
+ * 1 => to the nearest units digit
+ * 2 => to the nearest tenth digit
+ * 3 => to the nearest hundredth digit
+**/
+```
+```javascript
+var myError = new Error("custom err0r");
+
+
+var result = parseInt(prompt('enter a value between 10 and 20', '15'));
+
+if (result > 20) {
+    throw myError;
+} else if (result < 10) {
+    throw new RangeError ("Out of range");
+} else {
+    alert("with in accepted range");
+}
+```
+```javascript
+//error properties
+
+console.log(myError.name); //Error
+console.log(myError.message); //custom err0r
+```
+<br>
+
+#### error handling:
+
+1. try ... catch
+
+2. onerror event handler: the old standard solution, used to retrieve additional information about error and suppress error in the console
+
+1- try and catch :
+
+  if the try block <u>throws</u> an error will move directly to the catch block and ignore the rest of the code inside the try block... similarly if the catch block <u>throws</u> an error will ignore it and go to the finally block
+
+  <br>
+
+```javascript
+var result = parseInt(prompt('enter a value between 10 and 20', '15'));
+
+try{
+    if (result > 20)
+        throw "error!!!";
+     else if (result < 10)
+        throw new RangeError ("Out of range");
+     else
+        console.log("with in accepted range");
+
+    console.log('logging form the try block');
+}
+catch(e){
+console.log("logging from the catch block");
+}
+console.log("done");
+
+/***
+ * prompt<== 15
+ * output:
+ * with in accepted range
+ * logging form the try block
+ * done
+ *
+ ** prompt<== 55
+ * output:
+ ** logging from the catch block
+ ** done
+ ***/
+```
+
+```javascript
+var result = parseInt(prompt('enter a value between 10 and 20', '15'));
+
+try{
+    if (result > 20)
+        throw "error!!!";
+     else if (result < 10)
+        throw new RangeError ("Out of range");
+     else
+        console.log("with in accepted range");
+
+    console.log('logging form the try block');
+}
+catch(e){
+console.logg("catch error occurred"); //typeError here will prevent the execution of the catch block
+console.log("logging from the catch block");
+}
+finally{
+console.log("done");
+}
+/**
+ *prompt<== 55
+ * output:
+ * done
+ *
+ * NB: if there's no finally block and the code was the same, the rest of the code wouldn't have been executed as the error in the catch would stop the execution of the rest of my code
+*/
 
 ```
+```javascript
+var result = parseInt(prompt('enter a value between 10 and 20', '15'));
+
+try{
+    if (result > 20)
+        throw "error!!!";
+     else if (result < 10)
+        throw new RangeError ("Out of range");
+     else
+        console.log("with in accepted range");
+
+    console.log('logging form the try block');
+}
+catch(e){
+        if (e instanceof RangeError) {
+               console.log("this is a range error msg");
+               console.log(e.name);
+                console.log(e.message);
+          } else if( e === "error!!!") {
+            console.log("this is too much, man!")
+          }
+
+        console.log("logging from the catch block");
+}
+
+finally{
+        console.log("done");
+}
+
+console.log("logging from after the finally block"); // will be displayed if there's no error in the catch block or the finally block
+
+/**
+ * prompt<== 55
+ * this is too much, man!
+ * logging from the catch block
+ * done
+ * logging from after the finally block
+ */
+```
+2- onerror event :
+
+```javascript
+window.onerror = errorHandle;
+
+function errorHandle(msg,url,l,col,err){
+
+document.write("msg : "+msg);
+document.write("<br>");
+document.write("url : "+url);
+document.write("<br>");
+document.write("l : "+l);
+document.write("<br>");
+document.write("col : "+col);
+document.write("<br>");
+document.write("err : "+err);
+
+
+return true; //will not show the error in the console
+//return false will show the error in the console
+}
+
+var result = parseInt(prompt('enter a value between 10 and 20', '15'));
+
+
+if (result > 20)
+    throw "error!!!";
+ else if (result < 10)
+    throw new RangeError ("Out of range");
+ else
+    console.log("with in accepted range");
+
+
+console.log('logging form the try block');
+
+console.log("done");
+
+
+/**
+ * prompt<== 8
+ * msg : Uncaught RangeError: Out of range
+ * url : pen.js
+ * l : 26
+ * col : 7
+ * err : RangeError: Out of range
+ */
+```
+
+<br>
+
+### ReferenceError :invalid reference used, raised when referring to a variable that doesn't exist in the scope
+
+
+<br>
+
+### EvalError : raised by eval when used incorrectly
+
+<br>
+
+### URIError : raised when encodeURI() or decodeURI() are used incorrectly
 
 ___
 <br>
@@ -469,9 +705,271 @@ ___
 ## function Object
 <br>
 
+### Custom Function
+
+#### function statement vs function expression
+
+```javascript
+//function statement ... Hoisted (can be called before it's declaration)
+
+function sum(a,b){
+  return a+b;
+}
+//function expression  ... Not Hoisted (Has to be called after declaration)
+
+//part after the equal sign is called anonymous function or literal function
+
+var myFun = function (a,b){
+  return a+b ;
+}
+```
+#### Assign a function to array
+```javascript
+ var myArr = [1,2,3,function (a,b){
+  return a+b ;
+},5];
+
+//call function
+var summation = myArr[3]
+summation(2,2) //4
+//or
+myArr[3](2,2) //4
+```
+#### return function from function
+
 ```javascript
 
+function newAddingFunction (x, y, z) {
+	return function () {
+		return x + y + z;
+	};
+};
+
+var result = newAddingFunction(1, 2, 3);
+console.log(result());
+
 ```
+### Custom Object
+#### you can create an object using:
+1. constructor
+2. literal way
+![object declaration](assets/imgs/customObj1.png)
+#### adding properties to object with dot notation and subscript notation
+![dot & subscript notations](assets/imgs/customObj2.png)
+
+
+```javascript
+var myCustObj = {
+    name: "abbas el mehtas",
+    age: 21,
+    info: function () {
+        return "my name is " + this.name + " I'm " + this.age + " years old." //this refers to the calling object
+    }
+}
+
+console.log(myCustObj.info()) //my name is abbas el mehtas I'm 21 years old. 
+```
+
+Q: How can you create multiple object having the same properties
+A: we can either use factory method or a constructor
+
+```javascript
+//factory method
+
+function employee(nm, dept, sal) {
+	return {
+		name: nm,
+		department: dept,
+		salary: sal,
+		info: function () {
+			return this.name + '  works in the ' + this.department+" department";
+		},
+	};
+}
+
+var emp1 = employee('ahmed','mearn',2200);
+console.log(emp1.info()); //ahmed  works in the mearn department 
+
+
+//constructor method
+
+function Employee(name, department, salary) {
+
+//defining properties for the "caller object" ==> this
+
+    this.empName = name;
+    this.empDep = department;
+    this.empSalary = salary;
+
+}
+
+var emp2 = new Employee("Aizen", "13", 13113);
+console.log(emp2); //Employee { empName: 'Aizen', empDep: '13', empSalary: 13113 } 
+console.log(emp2["empName"]);
+```
+### object methods
+```javascript
+
+//instant methods
+console.log(emp2.hasOwnProperty('empName')); //true
+console.log(emp2.hasOwnProperty('empname')); //false
+console.log(emp2.toString()); //[object Object] .... this is the string representation of objects, its telling me it's an object from  the parent Object and It inherit from it all it's properties, hence toString()
+
+
+//static functions (Class Methods)
+console.log(Object.keys(emp2)); // [ 'empName', 'empDep', 'empSalary' ] 
+console.log(Object.values(emp2)); // [ 'Aizen', '13', 13113 ] 
+
+//delete property from object
+
+delete emp2.empName
+
+console.log(emp2); //Employee { empDep: '13', empSalary: 13113 } 
+
+for (const key in emp2) {
+        console.log(key + " : " +emp2[key])
+}
+//empDep : 13
+//empSalary : 13113
+```
+Q: what is the difference between instance method and static method ?
+
+A: Instance method are methods which require an object of its class to be created before it can be called. Static methods are the methods in Java that can be called without creating an object of class.
+
+### data descriptor
+
+data descriptor means :
+- to prevent <u>loop</u> over the object and it properties
+- to prevent <u>deleting</u> the object properties
+- to prevent <u>changing the value</u> specified with a key once it's initiated ...ie property's value can't be changed
+
+<br>
+
+data descriptor default values:
+
+  value: undefined;
+
+  writable:false;
+
+  configurable:false
+
+  enumerable:false
+
+##### NB : these values are added implicitly after I define my objName and PropName
+
+
+```javascript
+/*
+
+//static method:
+
+Object.defineProperty(objName,propName,{
+    accessor descriptor or  data descriptor
+}
+})
+*/
+
+var name = "ali";
+var age = 25;
+var address="5 sesame st. "
+
+var obj = {};
+
+Object.defineProperty(obj, 'name', {
+  value: name,
+
+  writable: false, // cant change it's value once defined
+
+  configurable: false, // cant delete the value specified to my propName
+
+  enumerable : false // can't loop over properties in the object
+});
+
+console.log(obj.name);//ali
+
+obj.name = "zidan";
+
+console.log(obj.name); //ali ... even if i didn't write 'writable: false' the value would have still been ali as it's the default value, in order to change the value writable should be true
+
+delete obj.name
+
+console.log(obj.name);//ali
+
+for (const key in obj) {
+    console.log(i+":"+obj[key]) // NO OUTPUT, doesn't log anything as I've prevented looping over this object
+}
+
+//to define multiple properties
+
+Object.defineProperties(obj, {
+	age: {
+        value: age,
+		writable: true,
+		configurable: false,
+		enumerable: false,
+	},
+	addr: {
+        value: address,
+		writable: true,
+		configurable: false,
+		enumerable: false,
+	},
+});
+
+obj.age = 23;
+console.log(obj.age); //23
+delete obj.addr
+console.log(obj.addr) //5 sesame st.
+```
+
+### accessor descriptor
+
+```javascript
+var department = 'SD';
+
+
+Object.defineProperties(obj, {
+    department:{
+        get: function () { //can remove it if I don't want the department value to be accessible  and know it's value
+            return department
+        },
+        set: function (val) {//can remove it if I don't want the department value to be editable
+            department = val;
+        }
+    },
+    display: {
+        // set: function (val) {
+        //     display = val;
+        // },
+        get: function () {
+            return 'this is a display method...' + ' my department is ' + this.department + ' my name is '+ this.name ;
+        }
+    }
+}
+)
+console.log(obj.department) //SD
+obj.department = "SA";
+console.log(obj.department) //SA .. if there was no set property the value would have stayed the same
+
+var displayOutput = obj.display;
+console.log(displayOutput); //this is a display method... my department is SA my name is ali 
+```
+
+![](assets/imgs/DataAndAccessorDescriptor.png)
+![](assets/imgs/DataAndAccessorDescriptor2.png)
+___
+<br>
+
+## object Object
+<br>
+
+```javascript
+
+
+```
+
+___
+<br>
 ___
 <br>
 
