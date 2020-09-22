@@ -1056,7 +1056,8 @@ console.log(result[0]());
 console.log(result[1]());
 console.log(result[2]());
 //explanation : the return is 3 each time as it doesn't have value for i so it get the value from the outer scope after the loop is done
---------------------------------------------
+```
+```javascript
 function outerFun() {
     var arr = [];
 
@@ -1080,10 +1081,9 @@ console.log(result[0]());
 console.log(result[1]());
 console.log(result[2]());
 
-//explanation the is a pattern for a well known problem, here I've made the variable i appear in my local scope by sending it each time using the immediate invoke, I sperated the scopes of the two function to avoid the problem from the previous solution where I was getting the value of i after the loop is already done
+//explanation the is a pattern for a well known problem, here I've made the variable i appear in my local scope by sending it each time using the immediate invoke, I separated the scopes of the two function to avoid the problem from the previous solution where I was getting the value of i after the loop is already done
 
 ```
-
 ___
 <br>
 ___
@@ -1092,11 +1092,76 @@ ___
 ## Browser Object Model (BOM)
 <br>
 
+- window object //parent object
+  - history object //sibling
+  - location object //sibling
+  - navigation object //sibling
+  - screen object //sibling
+  - document object //sibling => DOM
+
+![](assets/imgs/win2.png)
+![](assets/imgs/win4.png)
+
+![](assets/imgs/win.png)
+![](assets/imgs/win3.png)
+
+
+win.focus() is used to keep the new created window in focus when clicking on the buttons
+
+![](assets/imgs/win5.png)
+move by will keep moving the window indefinitely,
+move to will keep moving the window to a fixed position
+![](assets/imgs/win6.png)
+same goes to resize to and by & scroll to and by
+
+### setTimeOut() vs setInterval()
+  setTimeOut()=>works once after some time
+
+  setInterval() =>works indefinitely
+
+![](assets/imgs/interval.png)
+![](assets/imgs/interval2.png)
+![](assets/imgs/timeout1.png)
+![](assets/imgs/timeout2.png)
+you usually won't need stopTimeout but in this example I've forced myself into a loop so I needed to use it
+
+
+### history object :
+
+it refers to the history of the current  tab not the browsers history
+
+![](assets/imgs/histo.png)
+![](assets/imgs/histo2.png)
+
+##### NB :8
+history.go() accepts +ve and -ve values
+
+### location:
+![](assets/imgs/loc.png)
+
 ```javascript
 
+location.replace("your-url-here") // won't affect your history (can still move forward and backward)or history.length .. you're replacing one page with the other
+
+location.assign("your-url-here") //won't be able to move forward
+
+location.reload() //refresh my page
 ```
+![](assets/imgs/loc2.png)
+![](assets/imgs/loc3.png)
+![](assets/imgs/loc4.png)
+![](assets/imgs/loc5.png)
+![](assets/imgs/loc6.png)
+
+### Navigator
+![](assets/imgs/navigator.png)
+
+![](assets/imgs/navigator2.png)
+.appCodeName is a misleading property, it'll always return Mozilla, use userAgent instead
 
 ___
+
+
 <br>
 
 ## Document Object Model (DOM)
