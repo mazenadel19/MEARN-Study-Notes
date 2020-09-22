@@ -702,7 +702,7 @@ console.log("done");
 ___
 <br>
 
-## function Object
+## object Object
 <br>
 
 ### Custom Function
@@ -960,11 +960,127 @@ console.log(displayOutput); //this is a display method... my department is SA my
 ___
 <br>
 
-## object Object
+## function Object
 <br>
 
-```javascript
+![function](assets/imgs/fun.png)
 
+```javascript
+//IIFE => Immediate invoke function expression
+//ex:
+(function (a,b){
+  return a+b;
+})()
+```
+### function object property
+
+```javascript
+function sum() {
+    var total = 0;
+    console.log(arguments.length)
+   for (var index in arguments) {
+       total += arguments[index];
+   }
+    return total
+}
+
+
+console.log(sum(1,2,3,4,5,6)) //21
+```
+
+### function object method
+
+```javascript
+//function borrow using apply .. this will make able to use .join() on the string!!
+
+var arr = [];
+var str = "Hello Javascript";
+
+console.log(arr.join.apply(str, ['**'])); //H**e**l**l**o** **J**a**v**a**s**c**r**i**p**t 
+console.log([].join.apply(str, [,]));//H,e,l,l,o, ,J,a,v,a,s,c,r,i,p,t 
+
+//function borrow using call
+
+console.log(arr.join.call(str, "-"));//H-e-l-l-o- -J-a-v-a-s-c-r-i-p-t .. could have been written [].join.call as well
+
+//binding .. the pro of using binding method is that I can define how I'm joining my string in the return statement so I can return different forms for the same string
+
+//NB if you defined how you're binding in the declaration it will ignore  what you're using to bind when using the  literal function
+
+var res = [].join.bind(str,"-*")
+console.log(res()) //H-*e-*l-*l-*o-* -*J-*a-*v-*a-*s-*c-*r-*i-*p-*t 
+
+var res2 = [].join.bind(str,)
+console.log(res2('-*-')); //H-*e-*l-*l-*o-* -*J-*a-*v-*a-*s-*c-*r-*i-*p-*t 
+
+var res3 = [].join.bind(str,"-*")
+console.log(res("--")) //H-*e-*l-*l-*o-* -*J-*a-*v-*a-*s-*c-*r-*i-*p-*t 
+```
+
+#### shadowing concept
+
+```javascript
+  var a = 7
+
+  function foo(){
+    var a = 45; // this is called shadowing as I created a variable with the same name inside the function as the global variable
+
+  }
+```
+
+#### closure
+closure means variable that are inherited in my local scope from the outer scope
+
+![closure](assets/imgs/closure.png)
+NB: I've a variable a sent already in my innerFun/result that why I ignored the value of a from the closure
+![closure](assets/imgs/closure2.png)
+
+#### IIFE Pattern
+```javascript
+function outerFun() {
+    var arr = [];
+
+    for (var i = 0; i < 3; i++) {
+
+        arr.push(function () {
+            console.log(i); //return 3 3 3
+        })
+
+    }
+
+    return arr
+}
+
+var result = outerFun();
+console.log(result[0]());
+console.log(result[1]());
+console.log(result[2]());
+//explanation : the return is 3 each time as it doesn't have value for i so it get the value from the outer scope after the loop is done
+--------------------------------------------
+function outerFun() {
+    var arr = [];
+
+    for (var i = 0; i < 3; i++) {
+
+        arr.push(
+					(function (j) {
+						return function () {
+							console.log(j); //0,1,2
+						};
+					})(i),
+				);
+
+    }
+
+    return arr
+}
+
+var result = outerFun();
+console.log(result[0]());
+console.log(result[1]());
+console.log(result[2]());
+
+//explanation the is a pattern for a well known problem, here I've made the variable i appear in my local scope by sending it each time using the immediate invoke, I sperated the scopes of the two function to avoid the problem from the previous solution where I was getting the value of i after the loop is already done
 
 ```
 
