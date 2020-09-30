@@ -13,7 +13,7 @@
   - [object Object](#object-object)
   - [function Object](#function-object)
   - [Browser Object Model (BOM)](#browser-object-model-bom)
-  - [Document Object Model (DOM](#document-object-model-dom)
+  - [Document Object Model (DOM)](#document-object-model-dom)
   - [Events](#events)
   - [AJAX & JSON](#ajax--json)
   - [OOP](#oop)

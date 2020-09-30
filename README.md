@@ -20,3 +20,4 @@ NB: This is still a work in progress so I'll keep adding more into it whenever I
 <h2>Table of contents<h2>
 
 - [Javascript](Javascript/javascript.md)
+- [Projects](Projects/projects.md)
