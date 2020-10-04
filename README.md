@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%237DF1E"/><h1>MEARN Study Notes</h1>
+<img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%237DF1E"/> <img src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/>
+<h1>MEARN Study Notes</h1>
 
 ======
 
@@ -20,4 +21,5 @@ NB: This is still a work in progress so I'll keep adding more into it whenever I
 <h2>Table of contents<h2>
 
 - [Javascript](Javascript/javascript.md)
+- [jQuery](jQuery/jQuery.md)
 - [Projects](Projects/projects.md)
