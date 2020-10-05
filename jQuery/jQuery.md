@@ -5,19 +5,22 @@
 
 <h2>Table of contents<h2>
 
-  - [Selectors](#Selectors)
-  - [Manipulation](#Manipulation)
+- [Selectors](#Selectors)
+- [Manipulation](#Manipulation)
 
 <br>
 
 ## Selectors:
+
 This is how we used to select elements in Javascript
+
 ```javascript
-  window.onload=function(){
-      //any js selector
-      document.getElementById("Exmaple")
-  }//end of loading
+window.onload = function () {
+	//any js selector
+	document.getElementById('Exmaple');
+}; //end of loading
 ```
+
 How we select the same element using jQuery
 
 ```javascript
@@ -27,14 +30,12 @@ How we select the same element using jQuery
 
   )//end of loading
 ```
+
 similarly
+
 ```javascript
-
-  $(document).ready(function(){
-
-  })//end loading
+$(document).ready(function () {}); //end loading
 ```
-
 
 How to select an element/tag with jQuery
 
@@ -71,62 +72,65 @@ How to select an element/tag with jQuery
 
 ##### NB:
 
-* elements with id are unique in your page, ie. you should have only one element with id example ... you can have multiple element with the same id but then your id is no longer a unique, we use classes for that case.
+- elements with id are unique in your page, ie. you should have only one element with id example ... you can have multiple element with the same id but then your id is no longer a unique, we use classes for that case.
 
-* the case is different in javascript, ```document.getElementById()``` returns only the first element it finds with the id given.
-
-
-```js
-document.getElementById("example"); //returns first elem with id example
-```
-
+- the case is different in javascript, `document.getElementById()` returns only the first element it finds with the id given.
 
 ```js
-  $(function () {
-
-    $("li ,.a,#example").css({ //different type of selector same css style
-      backgroundColor:"yellow",
-      color:"red"
-    });
-
-    $("div a").css({ //select a tags inside that are inside divs
-      border:"1px solid green",
-      color:"red",
-      backgroundColor:"lightgreen"
-    })
-
-  });
+document.getElementById('example'); //returns first elem with id example
 ```
+
+```js
+$(function () {
+	$('li ,.a,#example').css({
+		//different type of selector same css style
+		backgroundColor: 'yellow',
+		color: 'red',
+	});
+
+	$('div a').css({
+		//select a tags inside that are inside divs
+		border: '1px solid green',
+		color: 'red',
+		backgroundColor: 'lightgreen',
+	});
+});
+```
+
 ### attribute selector
 
 ```js
-  $(function () {
+$(function () {
+	$('a[name]').css({
+		// select all tags with name attribute
+		backgroundColor: 'yellow',
+	});
 
-    $("a[name]").css({ // select all tags with name attribute
-      backgroundColor:"yellow"
-    })
+	$("a[href ^='http']").css({
+		// select all a tags whose href attribute value starts with http
+		backgroundColor: 'yellow',
+	});
 
-    $("a[href ^='http']").css({ // select all a tags whose href attribute value starts with http
-      backgroundColor:"yellow"
-    })
+	$("a[href $='eg']").css('backgroundColor', 'blue'); // select all a tags whose href attribute value ends with eg
 
-      $("a[href $='eg']").css("backgroundColor","blue") // select all a tags whose href attribute value ends with eg
+	$("a[href *='oo']").css({
+		// select all a tags whose href attribute value contains with oo
+		backgroundColor: 'lightgreen',
+	});
 
+	$('input[type=text]').css({
+		// select all input tags whose type attribute value equals with text
+		backgroundColor: 'green',
+	});
 
-      $("a[href *='oo']").css({ // select all a tags whose href attribute value contains with oo
-          backgroundColor: "lightgreen"
-      })
-
-      $("input[type=text]").css({ // select all input tags whose type attribute value equals with text
-          backgroundColor:"green"
-      })
-
-      //grouping
-       $("a[href *='oo'][name='']").css({  // select all a tags whose href attribute value contains with oo & has an input atribute of value empty string
-           backgroundColor:"yellow"
-       })
-  });
+	//grouping
+	$("a[href *='oo'][name='']").css({
+		// select all a tags whose href attribute value contains with oo & has an input atribute of value empty string
+		backgroundColor: 'yellow',
+	});
+});
 ```
+
 ### form filter
 
 ```js
@@ -195,114 +199,119 @@ document.getElementById("example"); //returns first elem with id example
 ### node tree selector
 
 ```js
-  $(function () {
+$(function () {
+	$('div:empty').css({
+		//divs with nothing in it no text, no comments N.O.T.H.I.N.G
+		width: '120px',
+		color: 'green',
+		padding: '5px',
+		margin: '10px auto',
+		height: '100px',
+		backgroundColor: 'yellow',
+	});
 
-    $("div:empty").css({ //divs with nothing in it no text, no comments N.O.T.H.I.N.G
-      width: "120px",
-      color: "green",
-      padding: "5px",
-      margin: "10px auto",
-      height: "100px",
-      backgroundColor:"yellow"
-    })
+	$('div:parent'); //divs that has other node elements inside it, text, space, enter, another element,comment
 
-    $("div:parent") //divs that has other node elements inside it, text, space, enter, another element,comment
+	// hierarchy selector
+	// direct child,all insted child ,next sibling ,all next sibling
 
-    // hierarchy selector
-    // direct child,all insted child ,next sibling ,all next sibling
+	$('div p').css('backgroundColor', 'green'); //all paragraphs inside div
+	$('div > p').css({
+		//all paragraphs that are direct child of the div
+		backgroundColor: 'yellow',
+	});
 
-    $("div p").css("backgroundColor","green") //all paragraphs inside div
-    $("div > p").css({ //all paragraphs that are direct child of the div
-        backgroundColor:"yellow"
-    })
+	$('table tr:first-child').css('backgroundColor', 'green'); // same as selecting ("tr:first-child")
 
-    $("table tr:first-child").css("backgroundColor", "green")// same as selecting ("tr:first-child")
+	$('table td:first-child').css({ backgroundColor: 'cyan' }); //first td in each tr
 
-    $("table td:first-child").css({ backgroundColor: "cyan" }) //first td in each tr
+	$('tr:even').css({
+		backgroundColor: 'orange',
+	});
+	$('tr:nth-child(2n)').css({
+		backgroundColor: 'cyan',
+	});
 
+	/*******************************************
+	 * NB:
+	 *
+	 *  tr:nth-child(2n) is not the same as tr:even
+	 *
+	 * tr:nth-child(2n) deals with every table as a separate case,
+	 * ie if there are 2 tables each consists of  3 rows
+	 * tr:nth-child(2n) will color only the second row in each table
+	 * tr:even will color the second row from the first table, the first
+	 * and the last row of the second tables
+	 ************************************************/
 
-    $("tr:even").css({
-        backgroundColor: "orange"
-    })
-    $("tr:nth-child(2n)").css({
-      backgroundColor: "cyan"
-    })
+	$('img + input').css({
+		// direct next sibling, the  1 input the comes right next to an image
+		backgroundColor: 'yellow',
+	});
 
-    /*******************************************
-     * NB:
-     *
-     *  tr:nth-child(2n) is not the same as tr:even
-     *
-     * tr:nth-child(2n) deals with every table as a separate case,
-     * ie if there are 2 tables each consists of  3 rows
-     * tr:nth-child(2n) will color only the second row in each table
-     * tr:even will color the second row from the first table, the first
-     * and the last row of the second tables
-     ************************************************/
+	$('img ~ input').css('backgroundColor', 'green'); // all next sibling, all inputs who belong to the same parent as the as the img will be selected
 
+	$("h1:contains('Hierarchy')").css({
+		//select h1 that has text Hierarchy
+		backgroundColor: 'green',
+	});
 
-    $("img + input").css({ // direct next sibling, the  1 input the comes right next to an image
-        backgroundColor: "yellow"
-    })
-
-
-    $("img ~ input").css("backgroundColor", "green") // all next sibling, all inputs who belong to the same parent as the as the img will be selected
-
-    $("h1:contains('Hierarchy')").css({ //select h1 that has text Hierarchy
-      backgroundColor:"green"
-    })
-
-    $("div:has(p)").css({ //select div that has child p
-        backgroundColor:"lightgreen",
-        width:"250px",
-        margin:"10px auto",
-        color:"red"
-    });
-  });
+	$('div:has(p)').css({
+		//select div that has child p
+		backgroundColor: 'lightgreen',
+		width: '250px',
+		margin: '10px auto',
+		color: 'red',
+	});
+});
 ```
-### Attributs
+
+### Attributes
 
 ```js
-  $(function () {
+$(function () {
+	alert($('#example').html()); //returns all the html inside #example
+	alert($('#example').text()); //returns only the text inside #example
 
-    alert($("#example").html()); //returns all the html inside #example
-    alert($("#example").text()) //returns only the text inside #example
+	$('#example').html(
+		"<p style='background-color:red;text-align:center'>new Parag</p>",
+	); //setting  the html inside #example
 
-    $("#example").html("<p style='background-color:red;text-align:center'>new Parag</p>") //setting  the html inside #example
+	$('#example').text(
+		"<p style='background-color:red;text-align:center'>new Parag</p>",
+	); //replacing the text inside #example (won't render and will appear as a text)
 
-    $("#example").text("<p style='background-color:red;text-align:center'>new Parag</p>"); //replacing the text inside #example (won't render and will appear as a text)
+	alert($(':text:first').val()); //returns first text input value
 
+	$(':text:first').val('nay dataaaaa'); //setting the first text input value
 
-    alert($(":text:first").val()) //returns first text input value
+	alert($('#example').val()); //no return as the div doesn't have a value property
 
-    $(":text:first").val("nay dataaaaa"); //setting the first text input value
+	//getAttribute("name of attribute")
+	//setAttribute("name of attribute","value")
+	$('img:first').attr('src', 'tiger.gif');
+	$('img:last').attr('src', '1.jpg');
 
-    alert($("#example").val())//no return as the div doesn't have a value property
+	console.log($('img').attr('src')); //returns first src value it finds
 
-    //getAttribute("name of attribute")
-    //setAttribute("name of attribute","value")
-    $("img:first").attr("src", "tiger.gif");
-    $("img:last").attr("src", "1.jpg");
+	// NB: to get a property from jQuery collection you'll need to use a loop
+	$('img').each(function (i, elem) {
+		console.log($(elem).attr('src')); //return values inside src attr for all the imgs in my page
+	});
 
+	//use attr with events
+	$('p:first').attr('onclick', function () {
+		alert('attriute handle');
+	});
 
-    console.log($("img").attr("src"));//returns first src value it finds
-
-    // NB: to get a property from jQuery collection you'll need to use a loop
-    $("img").each(function (i, elem) {
-      console.log($(elem).attr("src")); //return values inside src attr for all the imgs in my page
-    })
-
-    //use attr with events
-     $("p:first").attr("onclick",function(){
-        alert("attriute handle");
-     });
-
-      //adding and removing attributes 
-      $("p").attr("class","active");
-      $("p").removeAttr("class");
-  });
+	//adding and removing attributes
+	$('p').attr('class', 'active');
+	$('p').removeAttr('class');
+});
 ```
+
 ---
+
 <br>
 
 ## Manipulation:
