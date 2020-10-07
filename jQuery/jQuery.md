@@ -17,7 +17,7 @@ This is how we used to select elements in Javascript
 ```javascript
 window.onload = function () {
 	//any js selector
-	document.getElementById('Exmaple');
+	document.getElementById('Example');
 }; //end of loading
 ```
 
@@ -26,7 +26,7 @@ How we select the same element using jQuery
 ```javascript
  jQuery(document).ready(function(){
 
-  //excuiter after page loading
+  //executed after page loading
 
   )//end of loading
 ```
@@ -62,7 +62,7 @@ How to select an element/tag with jQuery
     $(".a").css("backgroundColor", "cyan"); // selection by class name
 
     $("*").css({ //universal selector
-      margin: "10px auot",
+      margin: "10px",
       padding: "5px",
       'text-align': 'center
     })
@@ -125,7 +125,7 @@ $(function () {
 
 	//grouping
 	$("a[href *='oo'][name='']").css({
-		// select all a tags whose href attribute value contains with oo & has an input atribute of value empty string
+		// select all a tags whose href attribute value contains with oo & has an input attribute of value empty string
 		backgroundColor: 'yellow',
 	});
 });
@@ -213,7 +213,7 @@ $(function () {
 	$('div:parent'); //divs that has other node elements inside it, text, space, enter, another element,comment
 
 	// hierarchy selector
-	// direct child,all insted child ,next sibling ,all next sibling
+	// direct child,all instead child ,next sibling ,all next sibling
 
 	$('div p').css('backgroundColor', 'green'); //all paragraphs inside div
 	$('div > p').css({
@@ -274,16 +274,16 @@ $(function () {
 	alert($('#example').text()); //returns only the text inside #example
 
 	$('#example').html(
-		"<p style='background-color:red;text-align:center'>new Parag</p>",
+		"<p style='background-color:red;text-align:center'>new Paragraph</p>",
 	); //setting  the html inside #example
 
 	$('#example').text(
-		"<p style='background-color:red;text-align:center'>new Parag</p>",
+		"<p style='background-color:red;text-align:center'>new Paragraph</p>",
 	); //replacing the text inside #example (won't render and will appear as a text)
 
 	alert($(':text:first').val()); //returns first text input value
 
-	$(':text:first').val('nay dataaaaa'); //setting the first text input value
+	$(':text:first').val('new data'); //setting the first text input value
 
 	alert($('#example').val()); //no return as the div doesn't have a value property
 
@@ -301,7 +301,7 @@ $(function () {
 
 	//use attr with events
 	$('p:first').attr('onclick', function () {
-		alert('attriute handle');
+		alert('attribute handle');
 	});
 
 	//adding and removing attributes
@@ -309,9 +309,170 @@ $(function () {
 	$('p').removeAttr('class');
 });
 ```
+```javascript
+//selecting element in JS vs selecting element in jQuery
 
+//selecting element in JS
+$(function () {
+	var allLIO= document.getElementsByTagName("li");
+		for(var i=0;i<allLIO.length;i++){
+			allLIO[i].onclick=function(){
+				console.log(this.innerHTML);
+			}
+		}
+
+	//selecting element in jQuery
+	$("li").click(function () {
+		console.log($(this).text());
+	});
+});
+```
+<br>
+Adding events became easier as I no longer need to loop through my HTML collection to add event
+
+```javascript
+$(function () {
+	$("li").mouseover(function () {
+	// $(this).addClass("active");
+	//  if ($(this).hasClass("active"))
+	//      $(this).removeClass("active")
+	//  else
+	//      $(this).addClass("active")
+	$(this).toggleClass("active");
+	})
+ });
+```
+##### NB:
+* this refers to the element that triggered the event
+
+```javascript
+$(function () {
+	//JS >>> selector.style.display="none"
+	$("li").hide(2000).show(2000)
+ });
+```
+##### NB:
+
+* hide and show methods in jQuery accepts an interval of time to add a css like animation on your element
 ---
 
 <br>
 
 ## Manipulation:
+
+<br>
+
+```html
+<div class='a'>
+  <div class='b'>b</div>
+</div>
+````
+
+```javascript
+//.append() puts data inside an element at last index
+$('.a').append($('.c'));
+```
+
+```html
+<div class='a'>
+  <div class='b'>b</div>
+  <div class='c'>c</div>
+</div>
+```
+
+```javascript
+//.prepend() puts the prepending elem at first index
+$('.a').prepend($('.c'));
+```
+
+```html
+<div class='a'>
+  <div class='c'>c</div>
+  <div class='b'>b</div>
+</div>
+```
+
+```javascript
+//.after() puts the element after the element
+$('.a').after($('.c'));
+```
+
+```html
+<div class='a'>
+  <div class='b'>b</div>
+</div>
+<div class='c'>c</div>
+```
+
+```javascript
+//.before() puts the element before the element
+$('.a').before($('.c'));
+```
+
+```html
+<div class='c'>c</div>
+<div class='a'>
+  <div class='b'>b</div>
+</div>
+```
+
+![manipulators](https://i.stack.imgur.com/KatFd.png))
+
+##### NB:
+1. insertBefore() / insertAfter() / prependTo() / appendTo() works on the child not the parent!!! for example:
+
+```javascript
+$('.c').insertBefore($('.a'));
+$('.c').prependTo($('.a'));
+```
+2. use .clone(true) to make a copy from an element and copy/inherit the event on it as well, without it you're just making a plain new element!!
+
+```js
+var firstLI = $("li:first");
+$("#example").append(firstLI.clone(true)); //if firstLI had any events on it those events will be cloned
+```
+
+```javascript
+$(function () {
+	$("#RemoveElement").click(function () {
+	DivObj=$("#example").empty(); //.empty() will empty all the text inside #example
+	});
+
+	//NB: we made DivObj a global variable here so we could use it again in the next function
+
+	$("#Recover").click(function () {
+		$("body").append(DivObj); //adds empty texted DivObj at the end of my body
+	});
+
+});
+```
+
+```javascript
+$(function () {
+	$("#example").hover(function () {
+		$(this).toggleClass("active");
+	})
+
+	 DivObj = $("#example").remove();//same as applying display none in css, (DivObj won't have a copy events on #example)
+
+	});
+
+	$("#Recover").click(function () {
+		$("body").append(DivObj); //adds DivObj with all it's text at the end of my body but without any events
+	});
+
+});
+```
+
+```javascript
+$(function () {
+
+	DivObj = $("#example").detach();//remove element with a copy of the events
+});
+$("#Recover").click(function () {
+	$("body").append(DivObj);
+});
+
+});
+```
+
