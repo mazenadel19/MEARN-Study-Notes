@@ -22,4 +22,5 @@ NB: This is still a work in progress so I'll keep adding more into it whenever I
 
 - [Javascript](Javascript/javascript.md)
 - [jQuery](jQuery/jQuery.md)
+- [Advanced Javascript](advancedJavascript/advJS.md)
 - [Projects](Projects/projects.md)
