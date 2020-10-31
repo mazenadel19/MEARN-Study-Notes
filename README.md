@@ -1,6 +1,7 @@
 <div align="center">
 
 <img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%237DF1E"/> <img src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/>
+<img src ="https://img.shields.io/badge/MongoDB-%234ea94b.svg?&style=for-the-badge&logo=mongodb&logoColor=white"/>
 <h1>MEARN Study Notes</h1>
 
 ======
@@ -23,4 +24,6 @@ NB: This is still a work in progress so I'll keep adding more into it whenever I
 - [Javascript](Javascript/javascript.md)
 - [jQuery](jQuery/jQuery.md)
 - [Advanced Javascript](advancedJavascript/advJS.md)
+- [ES6](ES6/es6.md)
+- [Mongo](Mongo/mongo.md)
 - [Projects](Projects/projects.md)
