@@ -3,4 +3,4 @@
 
 *.js linguist-detectable=false
 
-*.rb linguist-language=markdown
+*.rb linguist-language=Markdown
