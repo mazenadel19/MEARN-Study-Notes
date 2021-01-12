@@ -27,7 +27,7 @@ right now I'm in the process of going over everything I learnt and hopefully I'l
 <h2>Table of contents<h2>
 
 - [HTML](html/html.md)
-- [CSS](css/javascript.md)
+- [CSS](css/css.md)
 - [Javascript](Javascript/javascript.md)
 - [jQuery](jQuery/jQuery.md)
 - [Advanced Javascript](advancedJavascript/advJS.md)
