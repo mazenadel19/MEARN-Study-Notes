@@ -200,7 +200,7 @@ h1[rel='handsome'][title^='Important'] {
 
 Vital to note is that you can use multiple attribute selectors in the same selector, which requires all of them to match for the selector itself to match.
 
-8. Case-Insensitve Attribute Selectors
+8. Case-Insensitive Attribute Selectors
 
 ```css
 /* Will match
@@ -238,45 +238,45 @@ NB: positioning an element with `Sticky` works the same as fixed would but it ke
 ## Flexbox:
 
 
-- ```flex direction``` 
+- ```flex direction```
 	- Is used to configure the **main axis** in flexbox
 	- It takes the values ```row```, ```row-reverse```,```column```,```column-reverse```
 
-- ```justify content``` 
-	- determines how the content is distributed across the **main axis**. 
+- ```justify content```
+	- determines how the content is distributed across the **main axis**.
 	- It takes the values ```flex-start``` , ```flex-end``` , ```center```, ```space-between```, ```space-around```, ```space-evenly```
 
-- `flex-wrap` 
-	- Is used wrap content inside it's container if it didn't have enough space instead of shrinking 
-	- It takes the values `wrap`, `no-wrap` & `wrap-reverse`, it changes **cross axis** direction   
+- `flex-wrap`
+	- Is used wrap content inside it's container if it didn't have enough space instead of shrinking
+	- It takes the values `wrap`, `no-wrap` & `wrap-reverse`, it changes **cross axis** direction
 
-- ```align-items```  
+- ```align-items```
 	- Determines how the content is distributed across the **cross axiI**.
 	-  it takes the values ```flex-start``` , ```flex-end```, ```center```, ```stretch```, ```baseline```
 
-- `align-content` 
-	-  Controls or distribute space along the cross axis, **but only when we have multiple rows or columns** 
+- `align-content`
+	-  Controls or distribute space along the cross axis, **but only when we have multiple rows or columns**
 	-  It takes values   ```flex-start``` , ```flex-end``` , ```center```, ```space-between```, ```space-around```
 
 > NB: If we only have one column or one row, we don't have flex wrap turned on, align content does nothing for us at all.
 
-- `align-self` 
-	- is used to change the alignment along the **cross axis** for a single element using it. 
+- `align-self`
+	- is used to change the alignment along the **cross axis** for a single element using it.
 	- This property is not applied to the flex container itself, but to the element.
 
 
-- `flex-basis` 
-	- Set the initial width or height to the elements depending on the direction of my **main axis**. It overrides width/height properties values. 
+- `flex-basis`
+	- Set the initial width or height to the elements depending on the direction of my **main axis**. It overrides width/height properties values.
 	- This property is not applied to the flex container itself, but to the element.
 
-- `flex-grow` 
-	- control the amount of free space an element should take up, it allows element to expand to take the rest of available space in a it's container depending on the direction of it's **main axis** 
+- `flex-grow`
+	- control the amount of free space an element should take up, it allows element to expand to take the rest of available space in a it's container depending on the direction of it's **main axis**
 	- It takes unit-less number value, the **higher** the number the **bigger** space it will take
 	- This property is not applied to the flex container itself, but to the element.
 	- default  value is 1.
 
-- `flex-shrink` 
-	- If items are larger than the container, they shrink according to flex-shrink. Elements shrinks depending on the direction of the **main axis** 
+- `flex-shrink`
+	- If items are larger than the container, they shrink according to flex-shrink. Elements shrinks depending on the direction of the **main axis**
 	- It takes unit-less number value, the **higher** the number the **smaller** space it will take
 	- This property is not applied to the flex container itself, but to the element.
 	- default  value is 1.
@@ -333,34 +333,34 @@ what is the difference between align-items and align-content?
 
 ![cssgrid](img/grid1.png)
 
-- `grid-template-rows` : is used to define how much space a row should occupy in the grid  
+- `grid-template-rows` : is used to define how much space a row should occupy in the grid
 
 - `repeat(2 ,2fr)` is translated to `2fr 2fr`
 
 ![cssgrid](img/grid2.png)
 
-- `auto` is translated to fill min width and min hight that could fit the content 
+- `auto` is translated to fill min width and min hight that could fit the content
 
 ![cssgrid](img/grid3.png)
 ![cssgrid](img/grid4.png)
 
 
-- `justify-items` is used to control how an element should behave horizontally when it has extra space 
+- `justify-items` is used to control how an element should behave horizontally when it has extra space
 
 - `align-items` is used to control how an element should behave vertically when it has extra space
 
 ![cssgrid](img/grid5.png)
 ![cssgrid](img/grid6.png)
 
-- `repeat( auto-fill, minmax(200px,1fr))` 
-	- `auto-fill` adjust the number of column accourdingly to the available viewport available width and the specified width 
-	- `minmax(200px,1fr)` the minimum width for the column is 200px and it can expands till it's max width isnot greater than 1fr
+- `repeat( auto-fill, minmax(200px,1fr))`
+	- `auto-fill` adjust the number of column accordingly to the available viewport available width and the specified width
+	- `minmax(200px,1fr)` the minimum width for the column is 200px and it can expands till it's max width is not greater than 1fr
 
 ![cssgrid](img/grid7.png)
 ![cssgrid](img/grid8.png)
 
 - `grid-column` is short hand for `grid-column-start` and `grid-column-end`
-- `grid-column : 1/-1` will make the element to take full viewport width 
+- `grid-column : 1/-1` will make the element to take full viewport width
 
 ![cssgrid](img/grid9.png)
 ![cssgrid](img/grid10.png)
@@ -372,14 +372,14 @@ what is the difference between align-items and align-content?
 ![cssgrid](img/grid13.png)
 
 
-- `grid-row: 1/4` will expand to cover for 4 row height 
+- `grid-row: 1/4` will expand to cover for 4 row height
 
 > NB: when we had 2 elements with green class and `grid-row: 1/4` this resulted that the 2 elements be at the top  page as they both had `grid-column-start: 1`
 
 ![cssgrid](img/grid14.png)
 ![cssgrid](img/grid15.png)
 
-- `justify-self` and `align-self` are used to change the behavior of an element horizontally and vertically 
+- `justify-self` and `align-self` are used to change the behavior of an element horizontally and vertically
 
 ![cssgrid](img/grid16.png)
 ![cssgrid](img/grid17.png)
