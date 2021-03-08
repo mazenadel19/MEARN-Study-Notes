@@ -15,13 +15,13 @@
 <br>
 
 NB:
+
 - Although I'm done the training program, I didn't have enough time then to write everything that I've learnt through out the course,<br>
 right now I'm in the process of going over everything I learnt and hopefully I'll be adding more and more content in the next few weeks
 
 - I've also decided to keep using this repo as my own documentation, so I'll be adding stuff beyond the scope of what I've learnt in the program
 
 - Lastly, feel free to contribute and edit any mistake you might find 😄
-
 
 <hr><br>
 <h2>Table of contents<h2>
@@ -33,4 +33,5 @@ right now I'm in the process of going over everything I learnt and hopefully I'l
 - [Advanced Javascript](advancedJavascript/advJS.md)
 - [ES6](ES6/es6.md)
 - [Mongo](Mongo/mongo.md)
+- [React](React/react.md)
 - [Projects](Projects/projects.md)

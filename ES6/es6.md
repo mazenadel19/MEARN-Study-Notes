@@ -5,16 +5,47 @@
 
 <h2>Table of contents<h2>
 
+- [var scope vs let scope](#scope)
 - [Callback & Promises:](#callback--promises)
   - [The Callback Hell:](#the-callback-hell)
-  - [Promises:](#promises)
+  - [Promises](#promises)
+  - [Async & Await](#async--await)
 - [XHR & AJAX:](#xhr--ajax)
-  - [fetch](#fetch)
-- [Async & Await](#async--await)
-- [Prototypes, Classes, & The New Operator](#prototypes-classes--the-new-operator)
+  - [Fetch](#fetch)
+  - [Axios](#axios)
+- [Prototypes, Classes, OOP & The New Operator](#prototypes-classes-oop--the-new-operator)
 - [Module:](#module)
 
-## Callback & Promises:
+## Scope
+
+what is the difference between `var` scope and `let` scope?
+
+<details><summary><b>Answer</b></summary>
+
+`var` is function scoped while `let` is block scoped
+
+```js
+for (let i = 0; i < 5; i++) {
+	let msg = 'zzzzzzzzz';
+	console.log(msg); //prints out zzzzzzzzzzz 5 times
+}
+
+console.log(msg); //Error
+```
+
+```js
+for (var i = 0; i < 5; i++) {
+	var msg = 'zzzzzzzzz';
+	console.log(msg); //prints out zzzzzzzzzzz 5 times
+}
+
+console.log(msg); //prints out zzzzzzzzzzz
+console.log(i); //5
+```
+
+</details>
+
+## Callback & Promises
 
 Javascript is **a single threaded language** yet it can handle doing asynchronous stuff like
 
@@ -34,23 +65,23 @@ console.log('I happen Second!');
 haven't you ever wonder HOW??
 ![Javascript](images/1.png)
 
-### The Callback Hell:
+### The Callback Hell
 
 <br>
 
 let's have an example where we have only a button on the screen and we're moving it horizontally
 
-![](images/2.png)
+![image](images/2.png)
 
 this is what a callback hell looks like, a function calling back a function, calling back a function,calling back a function ...etc
 
 if we wanted to write this to look a little nicer it shall look like this
 
-![](images/3.png)
+![image](images/3.png)
 
 let's trigger an action to stop the button if it's about to get outside the screen
 
-![](images/4.png)
+![image](images/4.png)
 
 ```js
 //NB:
@@ -61,7 +92,7 @@ let's trigger an action to stop the button if it's about to get outside the scre
 
 Now let's change this a little so instead of having just a straight forward callback, we'll have 2 callbacks, one for if we can go further to the right and one if we reached the edge
 
-![](images/5.png)
+![image](images/5.png)
 
 <br>
 
@@ -70,24 +101,24 @@ Now let's change this a little so instead of having just a straight forward call
 
 <br><br>
 
-![](images/6.png)
-![](images/7.png)
-![](images/8.png)
-![](images/9.png)
+![image](images/6.png)
+![image](images/7.png)
+![image](images/8.png)
+![image](images/9.png)
 
 Can't you sense it yet? when you had one call back it was barely bearable but with two call backs it gets ugly and super looooooong, enter promises
 
-### Promises:
+### Promises
 
-![](images/10.png)
+![image](images/10.png)
 
 promise is a pattern for writing async code
 
-![](images/12.png)
+![image](images/12.png)
 
 this is how our long code would look like with promises
 
-![](images/11.png)
+![image](images/11.png)
 
 ok so now we understand why promises are useful, but how do we write a promise?
 
@@ -461,23 +492,26 @@ each promise will work right after the promise before it if it finished successf
 
 ```js
 let myProm = new Promise((resolve, reject) => {
-    let x = 1+1;
+	let x = 1 + 1;
 
-    if (x == 2) {
-        resolve('this is sent in the resolve');
-    } else {
-        reject('this is sent in the reject')
-    }
-})
+	if (x == 2) {
+		resolve('this is sent in the resolve');
+	} else {
+		reject('this is sent in the reject');
+	}
+});
 
-myProm.then((dataFromResolve) => {
-    console.log('this is in the then ::::', dataFromResolve);
-}).catch((dataFromReject) => {
-    console.log('this is in the catch ::::', dataFromReject);
-})
+myProm
+	.then((dataFromResolve) => {
+		console.log('this is in the then ::::', dataFromResolve);
+	})
+	.catch((dataFromReject) => {
+		console.log('this is in the catch ::::', dataFromReject);
+	});
 
 //output: this is in the then :::: this is sent in the resolve
 ```
+
 ```js
 userleft = false;
 userwatchcatmemes = true;
@@ -500,19 +534,22 @@ function studyingPromise() {
 	});
 }
 
-studyingPromise().then((res) => {
-    console.log(res);
-}).catch((err) => {
-console.log(err.name+"  "+err.message);
-})
+studyingPromise()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err.name + '  ' + err.message);
+	});
 
 //output: userleft  cats > ppl
 ```
+
 ```js
 //promise.all runs all the promises and after they are all done it calls then()
 const goforawalk1 = new Promise((resolve, reject) => {
-    resolve('resolve of walking1')
-})
+	resolve('resolve of walking1');
+});
 
 const goforawalk2 = new Promise((resolve, reject) => {
 	resolve('resolve of walking2');
@@ -525,12 +562,13 @@ const goforawalk3 = new Promise((resolve, reject) => {
 //Promise.all they all run at the same time
 Promise.all([goforawalk1, goforawalk2, goforawalk3]).then((data) => {
 	console.log(data); //["resolve of walking1", "resolve of walking2", "resolve of walking3"]
-})
+});
 //returns as soon as any promise is done
 Promise.race([goforawalk1, goforawalk2, goforawalk3]).then((data) => {
 	console.log(data); //resolve of walking1
 });
 ```
+
 ```js
 
 let prom1 =  Promise.resolve('hello');
@@ -545,9 +583,253 @@ let prom4 = fetch('https://jsonplaceholder.typicode.com/todos').then((res) => {
 Promise.all([prom1, prom2, prom3, prom4]).then((data) => {
     console.log(data
 ```
+
 ---
 
-## XHR & AJAX:
+## Async & Await
+
+### async
+
+```javascript
+async function greet() {
+	return 'hi';
+}
+console.log(greet()); // Promise {<fulfilled>: "hi"}
+//function preceded with async return a 'resolved' promise with the value returned
+
+greet().then((data) => console.log(`promise resolved with value ${data}`)); //promise resolved with value hi
+```
+
+to create a promise with a rejected value throw an error!!
+
+```javascript
+async function add(x, y) {
+	if (typeof x !== 'number' || typeof y !== 'number') {
+		throw 'X & Y Must be numbers';
+	} else {
+		return x + y;
+	}
+}
+
+add('a', 'x')
+	.then((val) => {
+		console.log(`resolved with ${val}`);
+	})
+	.catch((err) => {
+		console.log(`rejected with ${err}`);
+	});
+```
+
+```javascript
+// same function without async
+function add(x, y) {
+	return new Promise((resolve, reject) => {
+		if (typeof x !== 'number' || typeof y !== 'number') {
+			reject('X & Y Must be numbers');
+		} else {
+			resolve(x + y);
+		}
+	});
+}
+
+add('a', 'x')
+	.then((val) => {
+		console.log(`resolved with ${val}`);
+	})
+	.catch((err) => {
+		console.log(`rejected with ${err}`);
+	});
+```
+
+### await
+
+![await](images/await.png)
+
+```javascript
+// unfortunately not good enough example
+function makeRequest(location) {
+	return new Promise((resolve, reject) => {
+		console.log(`making request to ${location}`);
+		if (location == 'google') {
+			resolve('google says hi');
+		} else {
+			reject('we only talk to google');
+		}
+	});
+}
+
+// makeRequest().then((datafromresolve) => {
+//     console.log('it worked cuz I'm returning a promise', datafromresolve);
+// }).catch((datafromreject) => {
+//     console.log('it worked cuz I'm ret urning a promise', datafromreject);
+// })
+
+function processRequest(response) {
+	return new Promise((resolve, reject) => {
+		console.log(`processing response`);
+		resolve(`extra information ${response}`);
+	});
+}
+
+// makeRequest('google').then((res) => {
+//     return processRequest(res)
+// }).then((response) => {
+//     console.log(response)
+// })
+
+async function dowork() {
+	//with async functions you handle errors with try & cat
+	try {
+		const response = await makeRequest('goooaagle'); //this tells compiler to hold on and don't do anything else before this finish executing
+		console.log(response);
+		const processReq = await processRequest(response);
+		console.log(processReq);
+	} catch (err) {
+		console.log('error!!', err);
+	}
+}
+dowork();
+```
+
+```javascript
+//good example
+let posts = [
+	{ title: 'post1', body: 'this is post1' },
+	{ title: 'post2', body: 'this is post2' },
+];
+
+function getPosts() {
+	setTimeout(() => {
+		let outPut = '';
+		posts.forEach((post, i) => {
+			outPut += `<li>${post.title}</li>`;
+		});
+		document.body.innerHTML = outPut;
+	}, 1000);
+}
+
+getPosts();
+
+function createPost(post) {
+	setTimeout(() => {
+		posts.push(post);
+	}, 2000);
+}
+
+createPost({ title: 'post3', body: 'this is post3' });
+//the problem here is that once our body is created we can't add more elements into it, notice that adding elements to body takes one second while creating a new element takes two seconds
+```
+
+```javascript
+//solution 1 using callbacks
+let posts = [
+	{ title: 'post1', body: 'this is post1' },
+	{ title: 'post2', body: 'this is post2' },
+];
+
+function getPosts() {
+	setTimeout(() => {
+		outPut = '';
+		posts.forEach((post, i) => {
+			outPut += `<li>${post.title}</li>`;
+		});
+		document.body.innerHTML = outPut;
+	}, 1000);
+}
+
+function createPost(post, callback) {
+	setTimeout(() => {
+		posts.push(post);
+		callback();
+	}, 2000);
+}
+
+createPost({ title: 'post3', body: 'this is post3' }, getPosts);
+```
+
+```javascript
+//same functionality but with promises
+
+let posts = [
+	{ title: 'post1', body: 'this is post1' },
+	{ title: 'post2', body: 'this is post2' },
+];
+
+function getPosts() {
+	setTimeout(() => {
+		outPut = '';
+		posts.forEach((post, i) => {
+			outPut += `<li>${post.title}</li>`;
+		});
+		document.body.innerHTML = outPut;
+	}, 1000);
+}
+
+function createPost(post) {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			posts.push(post);
+			const err = false;
+
+			if (!err) {
+				resolve();
+			} else {
+				reject('sth went wrong');
+			}
+		}, 2000);
+	});
+}
+
+createPost({ title: 'post3', body: 'this is post3' })
+	.then(getPosts)
+	.catch((err) => console.log(err));
+```
+
+```javascript
+//same example with async/await
+let posts = [
+	{ title: 'post1', body: 'this is post1' },
+	{ title: 'post2', body: 'this is post2' },
+];
+
+function getPosts() {
+	setTimeout(() => {
+		outPut = '';
+		posts.forEach((post, i) => {
+			outPut += `<li>${post.title}</li>`;
+		});
+		document.body.innerHTML = outPut;
+	}, 1000);
+}
+
+function createPost(post) {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			posts.push(post);
+			const err = false;
+
+			if (!err) {
+				resolve();
+			} else {
+				reject('sth went wrong');
+			}
+		}, 2000);
+	});
+}
+
+async function init() {
+	await createPost({ title: 'post3', body: 'this is post3' });
+	getPosts();
+}
+
+init();
+
+//this way we solved the problem with our first example, if we removed async and await we'll get post1 and post2 only!!
+```
+
+---
+
+## XHR & AJAX
 
 XHR stands for XMLHttpRequests
 
@@ -585,7 +867,54 @@ this with arrow functions usually refers to windows object as it refers to the p
 
 <br><br>
 
-### fetch:
+### ajax
+
+Converting Json to Javascript
+
+```javascript
+let data = `{"ticker":{"base":"BTC","target":"USD","price":"46738.12773829","volume":"76039.39437002","change":"20.94220054"},"timestamp":1614301922,"success":true,"error":""}`;
+
+let parsedData = JSON.parse(data); //converting Json to Javascript
+
+console.log(parsedData);
+
+/*
+error: ""
+success: true
+ticker:
+base: "BTC"
+change: "20.94220054"
+price: "46738.12773829"
+target: "USD"
+volume: "76039.39437002"
+__proto__: Object
+timestamp: 1614301922
+__proto__: Object
+*/
+```
+
+Converting Javascript to Json
+
+```javascript
+const dog = {
+	breed: 'lab',
+	color: 'black',
+	isAlive: true,
+	age: 5,
+	owner: undefined,
+};
+
+const stringfiedData = JSON.stringify(dog); //converting Javascript to Json
+
+console.log(stringfiedData);
+/*
+{"breed":"lab","color":"black","isAlive":true,"age":5}
+*/
+```
+
+---
+
+### Fetch
 
 ![fetch](images/fetch1.png)
 
@@ -759,7 +1088,9 @@ function xyz() {
 	return Promise.resolve(your - promise - object - here);
 }
 ```
+
 ---
+
 ### fetch recap
 
 ```js
@@ -770,486 +1101,439 @@ function xyz() {
 let myprom=  fetch('https://reqres.in/api/users')
 
 myprom.then((res) => {
-				return res.json(); //take care of this silly mistake cuz it broke the code multiple times before, we use return keyword with arrow function
-			})
-			.then((data) => console.log(data));
+    return res.json(); //take care of this silly mistake cuz it broke the code multiple times before, we use return keyword with arrow function
+   })
+   .then((data) => console.log(data));
+   .catch( e=>console.log('error!!!',e))
+
 ```
+
+promises vs async await
+
+```js
+fetch('https://api.cryptonator.com/api/full/btc-usd')
+	.then((res) => {
+		console.log('response, waiting to parse', res);
+		return res.json();
+	})
+	.then((data) => {
+		console.log('parsed response', data);
+		console.log(data.ticker.price);
+	})
+	.catch((e) => console.log('error!!!', e));
+
+/**
+ * fetch resolve the promise as soon as it receives the header so it doesn't wait till response body is back completely (response come backin the form of seprated streams and not a single chunk)
+ *! to solve this drawback we use `.json()` method and it returns another promise with the whole data
+ */
+```
+
+```js
+const getBitcoinPrice = async () => {
+	try {
+		let res = await fetch('https://api.cryptonator.com/api/full/btc-usd');
+		// let data1 = res.json();
+		// console.log(data1); //returns a promise!!
+
+		let data = await res.json();
+		console.log(data);
+		/*
+   error: ""
+   success: true
+   ticker:
+   base: "BTC"
+   change: "-145.68770750"
+   markets: (9) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+   price: "46262.72972434"
+   target: "USD"
+   volume: "95861.89435499"
+   __proto__: Object
+   timestamp: 1614346922
+   */
+		console.log('price', data.ticker.price);
+	} catch (e) {
+		console.log('error', e);
+	}
+};
+
+document.addEventListener('load', getBitcoinPrice());
+```
+
 ```js
 // to insert data to api
-let myprom = fetch('https://reqres.in/api/users',{
-    method: "POST",
-    headers: {
-        'Content-Type':'application/json'
-    },
-    body: JSON.stringify({
-        name: 'xexo'
-    })
-}
-)
+let myprom = fetch('https://reqres.in/api/users', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	body: JSON.stringify({
+		name: 'xexo',
+	}),
+});
 
-myprom.then((res) => {
-
-    return res.json();
-})
-    .then((data) => console.log(data));
+myprom
+	.then((res) => {
+		return res.json();
+	})
+	.then((data) => console.log(data));
 //{name: "xexo", id: "204", createdAt: "2020-10-21T12:04:45.630Z"} createdAt: "2020-10-21T12:04:45.630Z" id: "204" name: "xexo"
 ```
+
+### Axios
+
+axios resolve the promise when all the data comes back unlike fetch
+
+```javascript
+axios
+	.get('https://api.cryptonator.com/api/full/btc-usd')
+	.then((res) => {
+		console.log(
+			'old price is ' + Math.round(46559.35130774) + '... newer price is',
+			Math.round(res.data.ticker.price),
+		);
+		let currentBitPrice = res.data.ticker.price;
+		if (currentBitPrice < 46559.35130774) {
+			console.log('price is down, go buy some bitcoin');
+		} else {
+			console.log("Price is on the rise!! you're gaining money");
+		}
+	})
+	.catch((e) => {
+		console.log('error!!!!!!!!!!!!!!!!!!!!!!!!!!', e);
+	});
+```
+
+```javascript
+let fetchBPrice = async () => {
+	try {
+		let res = await axios.get('https://api.cryptonator.com/api/full/btc-usd');
+		console.log(res.data.ticker.price);
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+fetchBPrice();
+```
+
+## Prototypes, Classes, OOP & The New Operator
+
+what is a prototype and what is `__proto__`?
+
+<details><summary><b>Answer</b></summary>
+
+the idea of prtotype is to make a big object which is the prototype for other objects, ie make an Array object and all the custom made arrays will inherit from the array object
+
+`__proto__` is a property made on our "big" prototypes to collect all the shared functions that would be inherited to any smaller prototype
+
+```javascript
+Array.prototype
+
+concat: ƒ concat()
+constructor: ƒ Array()
+copyWithin: ƒ copyWithin()
+entries: ƒ entries()
+every: ƒ every()
+fill: ƒ fill()
+filter: ƒ filter()
+find: ƒ find()
+findIndex: ƒ findIndex()
+flat: ƒ flat()
+flatMap: ƒ flatMap()
+forEach: ƒ forEach()
+includes: ƒ includes()
+indexOf: ƒ indexOf()
+join: ƒ join()
+keys: ƒ keys()
+lastIndexOf: ƒ lastIndexOf()
+length: 0
+map: ƒ map()
+pop: ƒ pop()
+push: ƒ push()
+reduce: ƒ reduce()
+reduceRight: ƒ reduceRight()
+reverse: ƒ reverse()
+shift: ƒ shift()
+slice: ƒ slice()
+some: ƒ some()
+sort: ƒ sort()
+splice: ƒ splice()
+toLocaleString: ƒ toLocaleString()
+toString: ƒ toString()
+unshift: ƒ unshift()
+values: ƒ values()
+Symbol(Symbol.iterator): ƒ values()
+Symbol(Symbol.unscopables): {copyWithin: true, entries: true, fill: true, find: true, findIndex: true, …}
+__proto__: Object
+```
+
+all these properties will be inherited to any array we make
+
 ---
- ### ajax
 
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
+the difference between `__proto__` and `.prototype` is that `.prototype` is the original object prototype, the one you see in the example above while `__proto__` is a reference for `.prototype`, you see it on defined custom objects, they're the same thing in the end of the day
 
 ```js
-```
-```js
-```
-```js
-```
-```js
-```
+let arr = [1, 2, 3];
+arr.__proto__; //returns the functions above but it's a reference, they are defined on Array object, similar to defining any function on an object
 
----
-
-## Async & Await
-
-### async
-
-```javascript
-async function greet() {
-	return 'hi';
+/*
+Array.protoype.megaman=()=>{
+    console.log('megaman saved us!')
 }
-console.log(greet()); // Promise {<fulfilled>: "hi"}
-//function preceded with async return a 'resolved' promise
 
-greet().then((data) => console.log(`promise resolved with value ${data}`)); //promise resolved with value hi
+now Array should have a function called megaman.
+*/
 ```
 
-to create a promise with a rejected value tyou throw an error!!
+NB: it's not recommended to add your own variables and functions on the prototype
+
+</details>
+
+<br>
+
+What is the deal with the `New` Keyword?
+
+
+<details><summary><b>Answer</b></summary>
+
+let's make a factory function to make colors
 
 ```javascript
-async function add(x, y) {
-	if (typeof x !== 'number' || typeof y !== 'number') {
-		throw 'X & Y Must be numbers';
-	} else {
-		return x + y;
+
+function makeColor(r, g, b) {
+	const color = {};
+	color.r = r; //<- this is called  property
+	color.g = g;
+	color.b = b;
+	color.rgb = function() {
+		const { r, g, b } = this; //in regular function this refers to the caller which is what is on the left of the dot (.)
+		return `rgb(${r}, ${g}, ${b})`;
+	};
+	color.hex = function() {
+		const { r, g, b } = this;
+		return (
+			'#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+		);
+	};
+	return color;
+}
+
+const color1 = new Color(40, 255, 60);
+color1.hex();
+const color2 = new Color(0, 0, 0);
+color2.hex();
+
+color1.hex === color2.hex //false
+
+```
+the word new makes it much easier as it implicitly create us the color object and implicitly returns it
+
+// *****************
+// THE NEW OPERATOR!
+// *****************
+
+// 1. Creates a blank, plain JavaScript object;
+// 2. Links (sets the constructor of) this object to another object;
+// 3. Passes the newly created object from Step 1 as the this context;
+// 4. Returns this if the function doesn't return its own object.
+
+
+```js
+function Color(r, g, b) { //function with capitalized name is called construnctor function
+	this.r = r;
+	this.g = g;
+	this.b = b;
+}
+```
+now with the help from the word `new` we will have the same result as the one from the factory function
+
+PS: in constructor function the word `this` refers to the implicite object we didn't create
+
+<br>
+
+and in order to add function on the prototype instead of adding them as properties we use
+
+```js
+Color.prototype.rgb = function() {
+	const { r, g, b } = this;
+	return `rgb(${r}, ${g}, ${b})`;
+};
+
+Color.prototype.hex = function() {
+	const { r, g, b } = this;
+	return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+};
+
+Color.prototype.rgba = function(a = 1.0) {
+	const { r, g, b } = this;
+	return `rgba(${r}, ${g}, ${b}, ${a})`;
+};
+
+```
+
+this way we have the same function on each color instead of creating a new function instance on each color like in the factory code
+
+and you call those functions the same you'd with regular function property
+
+```js
+const color1 = new Color(40, 255, 60);
+color1.hex();
+const color2 = new Color(0, 0, 0);
+color2.hex();
+
+color1.hex === color2.hex //true
+
+```
+
+</details>
+
+<br>
+
+what is a `class`?
+
+<details><summary><b>Answer</b></summary>
+
+`class` is a syntactic sugar to do factory Constructor functions, you'll achieve the same result but with a much cleaner code
+
+```javascript
+
+class Color {
+	constructor(r, g, b, name) { //a function that executs immediately whenever a new color is created , constructor is a must in classes!!
+		this.r = r;
+		this.g = g;
+		this.b = b;
+		this.name = name;
+	}
+	innerRGB() { //no Color.prototype.innerRGB 🥳
+		const { r, g, b } = this;
+		return `${r}, ${g}, ${b}`;
+	}
+	rgb() {
+		return `rgb(${this.innerRGB()})`;
+	}
+	rgba(a = 1.0) {
+		return `rgba(${this.innerRGB()}, ${a})`;
+	}
+	hex() {
+		const { r, g, b } = this;
+		return (
+			'#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+		);
 	}
 }
+const red = new Color(255, 67, 89, 'tomato');
+const white = new Color(255, 255, 255, 'white');
 
-add('a', 'x')
-	.then((val) => {
-		console.log(`resolved with ${val}`);
-	})
-	.catch((err) => {
-		console.log(`rejected with ${err}`);
-	});
 ```
+- the classes create a new empty object and set the value of `this` to the new object
+
+</details>
+
+
+what is `extends`?
+
+<br>
+<details><summary><b>Answer</b></summary>
 
 ```javascript
-// same function without async
-function add(x, y) {
-	return new Promise((resolve, reject) => {
-		if (typeof x !== 'number' || typeof y !== 'number') {
-			reject('X & Y Must be numbers');
-		} else {
-			resolve(x + y);
-		}
-	});
+class Pet {
+  constructor(name, age) {
+    console.log('IN PET CONSTRUCTOR!');
+    this.name = name;
+    this.age = age;
+  }
+
+  eat() {
+    return `${this.name} is eating!`;
+  }
 }
 
-add('a', 'x')
-	.then((val) => {
-		console.log(`resolved with ${val}`);
-	})
-	.catch((err) => {
-		console.log(`rejected with ${err}`);
-	});
+class Cat extends Pet {
+  constructor(name, age, livesLeft = 9) {
+    console.log('IN CAT CONSTRUCTOR!');
+    super(name, age);
+    this.livesLeft = livesLeft;
+  }
+
+  meow() {
+    return 'MEOWWWW!!';
+  }
+}
+
+class Dog extends Pet {
+  bark() {
+    return 'WOOOF!!';
+  }
+
+  eat() {
+    return `${this.name} scarfs his food!`;
+  }
+}
+
 ```
 
-### await
+`extends` keyword is used to make a class inherits the same properties from a parent class
 
-![await](images/await.png)
+ what is the deal with `super`?
+
+say when you create a cat, you want it to have a property called livesleft
 
 ```javascript
-// unfortunately not good enough example
-function makeRequest(location) {
-    return new Promise((resolve, reject) => {
-        console.log(`making request to ${location}`);
-        if (location == 'google') {
-            resolve('google says hi')
-        } else {
-            reject('we only talk to google')
-        }
-    })
+class Cat extends Pet {
+  constructor(name, age, livesLeft = 9) {
+    this.name = name;
+    this.age = age;
+    this.livesLeft = livesLeft;
+  }
+
+  meow() {
+    return 'MEOWWWW!!';
+  }
 }
 
-// makeRequest().then((datafromresolve) => {
-//     console.log('it worked cuz I'm returning a promise', datafromresolve);
-// }).catch((datafromreject) => {
-//     console.log('it worked cuz I'm returning a promise', datafromreject);
-// })
-
-function processRequest(response) {
-    return new Promise((resolve, reject) => {
-        console.log(`processing response`);
-        resolve(`extra information ${response}`);
-    })
-}
-
-// makeRequest('google').then((res) => {
-//     return processRequest(res)
-// }).then((response) => {
-//     console.log(response)
-// })
-
-
-async function dowork() { //with async functions you handle errors with try & cat
-    try {
-        const response = await makeRequest('goooaagle'); //this tells compiler to hold on and don't do anything else before this finish executing
-        console.log(response);
-        const processReq = await processRequest(response);
-        console.log(processReq);
-    } catch (err) {
-        console.log('error!!',err)
-    }
-}
-dowork()
 ```
+now there's no need for name and age as each cat is already a pet and cats have properties like name and age from pet but inorder to add a property to cat you need this `constructor` keyword and thus the word `super` which will reference our pet's name and age constructor
 
 ```javascript
-//good example
-let posts = [
-	{ title: 'post1', body: 'this is post1' },
-	{ title: 'post2', body: 'this is post2' },
-];
+class Cat extends Pet {
+  constructor(name, age, livesLeft = 9) {
+    console.log('IN CAT CONSTRUCTOR!');
+    super(name, age);
+    this.livesLeft = livesLeft;
+  }
 
-
-function getPosts() {
-    setTimeout(() => {
-        let outPut = '';
-        posts.forEach((post, i) => {
-            outPut += `<li>${post.title}</li>`;
-        });
-        document.body.innerHTML = outPut;
-    }, 1000)
+  meow() {
+    return 'MEOWWWW!!';
+  }
 }
 
-getPosts()
-
-function createPost(post) {
-    setTimeout(() => {
-        posts.push(post);
-    },2000)
-}
-
-createPost({ title: 'post3', body: 'this is post3' });
-//the problem here is that once our body is created we can't add more elements into it, notice that adding elements to body takes one second while creating a new element takes two seconds
 ```
+
+
+</details>
+
+<br>
+<details><summary><b>Answer</b></summary>
+
+
+</details>
+
+<br>
+<details><summary><b>Answer</b></summary>
 
 ```javascript
-//solution 1 using callbacks
-let posts = [
-	{ title: 'post1', body: 'this is post1' },
-	{ title: 'post2', body: 'this is post2' },
-];
 
-function getPosts() {
-    setTimeout(() => {
-        outPut = '';
-        posts.forEach((post, i) => {
-            outPut += `<li>${post.title}</li>`;
-        });
-        document.body.innerHTML = outPut;
-    }, 1000)
-}
-
-
-function createPost(post,callback) {
-    setTimeout(() => {
-        posts.push(post);
-        callback()
-    },2000)
-}
-
-createPost({ title: 'post3', body: 'this is post3' }, getPosts);
-```
-
-```javascript
-//same functionality but with promises
-
-let posts = [
-	{ title: 'post1', body: 'this is post1' },
-	{ title: 'post2', body: 'this is post2' },
-];
-
-function getPosts() {
-    setTimeout(() => {
-        outPut = '';
-        posts.forEach((post, i) => {
-            outPut += `<li>${post.title}</li>`;
-        });
-        document.body.innerHTML = outPut;
-    }, 1000)
-}
-
-
-function createPost(post) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            posts.push(post);
-            const err = false;
-
-            if (!err) {
-                resolve();
-            } else {
-                reject('sth went wrong');
-            }
-
-        }, 2000);
-    })
-}
-
-
-createPost({ title: 'post3', body: 'this is post3' })
-    .then(getPosts)
-    .catch(err=>console.log(err))
 
 ```
 
-```javascript
-//same example with async/await
-let posts = [
-	{ title: 'post1', body: 'this is post1' },
-	{ title: 'post2', body: 'this is post2' },
-];
+</details>
 
-function getPosts() {
-    setTimeout(() => {
-        outPut = '';
-        posts.forEach((post, i) => {
-            outPut += `<li>${post.title}</li>`;
-        });
-        document.body.innerHTML = outPut;
-    }, 1000)
-}
-
-
-function createPost(post) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            posts.push(post);
-            const err = false;
-
-            if (!err) {
-                resolve();
-            } else {
-                reject('sth went wrong');
-            }
-
-        }, 2000);
-    })
-}
-
-async function init(){
-    await createPost({ title: 'post3', body: 'this is post3' })
-    getPosts()
-}
-
-init()
-
-//this way we solved the problem with our first example, if we removed async and await we'll get post1 and post2 only!!
-
-```
+<br>
 
 ---
 
-## Prototypes, Classes, & The New Operator
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
-```javascript
-
-```
-
----
-
-## Module:
+## Module
 
 import and export statements allows you to break you code in different files and modules
 

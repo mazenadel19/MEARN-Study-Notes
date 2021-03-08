@@ -9,6 +9,7 @@
 - [inline-block](#inline-block)
 - [Attribute selectors](#attribute-selectors)
 - [Position](#Position)
+- [Fixed Vs Sticky](#fixed-vs-sticky)
 - [Flexbox](#flexbox)
 - [Flexbox Vs CSS Grid](#flexbox-vs-css-grid)
 - [CSS Grid](#css-grid)
@@ -234,6 +235,24 @@ Vital to note is that you can use multiple attribute selectors in the same selec
 ## Position
 
 NB: positioning an element with `Sticky` works the same as fixed would but it keeps it's position in the working flow till you scroll past it then it's gets fixed on your screen
+
+
+## Fixed Vs Sticky:
+
+what is the difference between Fixed and Sticky?
+
+<details><summary><b>Answer</b></summary>
+
+- `position : fixed`  element will keep it's position no matter the scrolling, not affected by other elements position
+- `position : sticky` acts similar to fixed but only after that element is about to get out of the view port, not affected by other elements position only after it's about to get be scrolled over and get out of the view
+
+</details>
+
+<br>
+
+
+
+
 
 ## Flexbox:
 
